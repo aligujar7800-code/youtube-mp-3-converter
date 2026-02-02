@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+print("FASTAPI IMPORTED successfully")
 from fastapi.middleware.cors import CORSMiddleware
 
 # Minimal Health Check Only - Commenting out services to isolate crash
