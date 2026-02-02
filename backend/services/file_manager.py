@@ -7,9 +7,9 @@ class FileManager:
     """
     Handles file paths and temporary file cleanup.
     """
-    def __init__(self, download_dir: str = "downloads"):
+    def __init__(self, download_dir: str = "/tmp/downloads"):
         self.download_dir = Path(download_dir)
-        self.download_dir.mkdir(exist_ok=True)
+        self.download_dir.mkdir(exist_ok=True, parents=True)
 
     def get_full_path(self, filename: str) -> Path:
         """Returns the full path for a given filename in the download directory."""
