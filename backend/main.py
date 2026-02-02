@@ -22,7 +22,7 @@ class ConvertRequest(BaseModel):
     url: str
     quality: str = "192"
 
-@app.post("/convert")
+@app.post("/api/convert")
 async def convert_video(request: ConvertRequest, background_tasks: BackgroundTasks):
     """
     Endpoint to start the conversion process.
@@ -51,7 +51,7 @@ async def convert_video(request: ConvertRequest, background_tasks: BackgroundTas
         }
     }
 
-@app.get("/download/{filename}")
+@app.get("/api/download/{filename}")
 async def download_file(filename: str):
     """
     Endpoint to stream the converted MP3 file.
@@ -69,7 +69,7 @@ async def download_file(filename: str):
         filename=f"converted_audio.mp3"
     )
 
-@app.get("/health")
+@app.get("/api/health")
 async def health_check():
     return {"status": "ok"}
 
