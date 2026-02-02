@@ -56,7 +56,7 @@ export function YouTubeConverter() {
     setProgress(10);
 
     try {
-      const response = await fetch("http://localhost:8000/convert", {
+      const response = await fetch("/api/convert", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,8 +66,8 @@ export function YouTubeConverter() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = typeof errorData.detail === 'string' 
-          ? errorData.detail 
+        const errorMessage = typeof errorData.detail === 'string'
+          ? errorData.detail
           : "Conversion failed. Please check the backend logs.";
         throw new Error(errorMessage);
       }
@@ -77,7 +77,7 @@ export function YouTubeConverter() {
 
       const data = await response.json();
       setVideoTitle(data.info.title);
-      setDownloadUrl(`http://localhost:8000${data.download_url}`);
+      setDownloadUrl(`/api${data.download_url}`);
       setProgress(100);
       setStatus("complete");
 
@@ -109,8 +109,8 @@ export function YouTubeConverter() {
   const handleDownload = useCallback((filename?: string | any) => {
     // If filename is a React event object, ignore it and use the default downloadUrl
     const actualFilename = typeof filename === 'string' ? filename : undefined;
-    const finalUrl = actualFilename ? `http://localhost:8000/download/${actualFilename}` : downloadUrl;
-    
+    const finalUrl = actualFilename ? `/api/download/${actualFilename}` : downloadUrl;
+
     if (finalUrl) {
       window.location.href = finalUrl;
       toast({
@@ -150,13 +150,13 @@ export function YouTubeConverter() {
         {status === "complete" ? (
           <>
             <ConversionProgress status={status} progress={progress} videoTitle={videoTitle} />
-            <DownloadButton 
+            <DownloadButton
               fileName={`${videoTitle}.mp3`}
               fileSize={`${(Math.random() * 5 + 3).toFixed(1)} MB`}
               onDownload={handleDownload}
             />
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full"
               onClick={handleReset}
             >
@@ -185,9 +185,9 @@ export function YouTubeConverter() {
             {isConverting ? (
               <ConversionProgress status={status} progress={progress} videoTitle={videoTitle} />
             ) : (
-              <Button 
-                variant="gradient" 
-                size="xl" 
+              <Button
+                variant="gradient"
+                size="xl"
                 className="w-full"
                 onClick={handleConvert}
                 disabled={!url.trim()}
