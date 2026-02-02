@@ -3,8 +3,8 @@ from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
-from services.downloader import downloader
-from services.file_manager import file_manager
+from backend.services.downloader import downloader
+from backend.services.file_manager import file_manager
 import uvicorn
 
 app = FastAPI(title="YouTube to MP3 Converter API")
